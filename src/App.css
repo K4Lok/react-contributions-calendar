@@ -5,3 +5,8 @@
     align-items: center;
     background: #CDE1E1;
 }
+
+.wrapper {
+    width: 20rem;
+    height: 20rem;
+}

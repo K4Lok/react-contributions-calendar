@@ -1,0 +1,20 @@
+.cell {
+    box-sizing: border-box;
+    position: relative;
+    width: calc(100% / 7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.cell.day::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    max-width: 1.8rem;
+    aspect-ratio: 1;
+    background-color: aliceblue;
+    border-radius: 4px;
+    z-index: -1;
+}
