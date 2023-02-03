@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import './ContributionsCalendar.css'
-
+import React, { useEffect, useState, useReducer } from 'react'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 
+import './ContributionsCalendar.css'
+import { dateReducer, INIT_STATE, ACTION } from '../reducers/dateReducer'
 import DateCell from './DateCell'
 
 export default function ContributionsCalendar({ width = "100%", height = "100%" }) {
@@ -10,45 +10,33 @@ export default function ContributionsCalendar({ width = "100%", height = "100%" 
   const MONTHS = ["January","February","March","April","May","June","July",
   "August","September","October","November","December"]
 
-  let date = new Date()
-  let today, firstDayOfMonth, lastDayOfMonth, thisMonthDays
+  const todayDate = new Date()
+  const today = todayDate.getDate()
 
-  const setDateValues = () => {
-    today = date.getDay()
-    firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-    lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-
-    thisMonthDays = Array.from(Array(lastDayOfMonth).keys())
-  }
-
-  const [currentMonth, setCurrentMonth] = useState(date.getMonth())
-  const [currentYear, setCurrentYear] = useState(date.getFullYear())
-  const [currentMonthDays, setcurrentMonthDays] = useState(Array.from(Array(lastDayOfMonth).keys()))
-
-  setDateValues()
+  const [state, dispatch] = useReducer(dateReducer, INIT_STATE)
 
   useEffect(() => {
-    date = new Date(currentYear, currentMonth, 1)
-    setDateValues()
-    console.log(currentMonthDays)
-  }, [currentMonth])
+    dispatch({
+      type: ACTION.INITIALIZE_DATES,
+    })
+  }, [])
 
-  const toPrevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11)
-      return
-    }
-    
-    setCurrentMonth(index => index - 1)
+  const handlePrevMonth = () => {
+    dispatch({
+      type: ACTION.PREV_MONTH,
+      payload: {
+        date: state.date
+      }
+    })
   }
 
-  const toNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0)
-      return
-    }
-    
-    setCurrentMonth(index => index + 1)
+  const handleNextMonth = () => {
+    dispatch({
+      type: ACTION.NEXT_MONTH,
+      payload: {
+        date: state.date
+      }
+    })
   }
 
   return (
@@ -56,9 +44,9 @@ export default function ContributionsCalendar({ width = "100%", height = "100%" 
       style={{ width: width, height: height }}
     >
       <div className="header">
-        <p onClick={toPrevMonth} className='btn-month'><BiChevronLeft size={25} /></p>
-        <p>{`${MONTHS[currentMonth]}, ${currentYear}`}</p>
-        <p onClick={toNextMonth} className='btn-month'><BiChevronRight size={25} /></p>
+        <p className='btn-month' onClick={handlePrevMonth} ><BiChevronLeft size={25} /></p>
+        <p>{`${MONTHS[state.currentMonth]}, ${state.currentYear}`}</p>
+        <p className='btn-month' onClick={handleNextMonth}><BiChevronRight size={25} /></p>
       </div>
       <div className="rows">
         {DAYCHARS.map((c) => {
@@ -67,7 +55,7 @@ export default function ContributionsCalendar({ width = "100%", height = "100%" 
           )
         })}
         {
-          thisMonthDays.map((d) => {
+          Array.from(new Array(state.totalDays).keys()).map((d) => {
             return (
               <DateCell key={d} name={true}>{d + 1}</DateCell>
             )
