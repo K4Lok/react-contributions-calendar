@@ -14,6 +14,8 @@ export const INIT_STATE = {
     totalDays: 0,
     firstDayInWeek: 0, 
     lastDayInWeek: 0, 
+    prevDays: 0,
+    nextDays: 0
 }
 
 export const dateReducer = (state, action) => {
@@ -31,28 +33,19 @@ export const dateReducer = (state, action) => {
 
 const initializeDates = (state) => {
     const date = new Date()
-    const currentMonth = date.getMonth()
-    const currentYear = date.getFullYear()
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDate()
-    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-    const totalDays = lastDayOfMonth
 
-    return {
-        ...state,
-        currentMonth,
-        currentYear,
-        firstDayOfMonth,
-        lastDayOfMonth,
-        totalDays, 
-    }
+    return handleCalculateDates(state, date)
 }
 
 const handleCalculateDates = (state, date) => {
     const currentMonth = date.getMonth()
     const currentYear = date.getFullYear()
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDate()
-    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-    const totalDays = lastDayOfMonth
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1)
+    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0)
+    const totalDays = lastDayOfMonth.getDate()
+
+    const firstDayInWeek = firstDayOfMonth.getDay()
+    const lastDayInWeek = lastDayOfMonth.getDay()
 
     return {
         ...state,
@@ -61,7 +54,7 @@ const handleCalculateDates = (state, date) => {
         currentYear,
         firstDayOfMonth,
         lastDayOfMonth,
-        totalDays, 
+        totalDays,
     }
 }
 
