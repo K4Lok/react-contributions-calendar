@@ -11,9 +11,8 @@ export const INIT_STATE = {
     currentYear: 0,
     firstDayOfMonth: 0,
     lastDayOfMonth: 0,
+    lastMonthTotalDays: 0,
     totalDays: 0,
-    firstDayInWeek: 0, 
-    lastDayInWeek: 0, 
     prevDays: 0,
     nextDays: 0
 }
@@ -40,12 +39,10 @@ const initializeDates = (state) => {
 const handleCalculateDates = (state, date) => {
     const currentMonth = date.getMonth()
     const currentYear = date.getFullYear()
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1)
-    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0)
-    const totalDays = lastDayOfMonth.getDate()
-
-    const firstDayInWeek = firstDayOfMonth.getDay()
-    const lastDayInWeek = lastDayOfMonth.getDay()
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay()
+    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDay()
+    const lastMonthTotalDays = new Date(currentYear, currentMonth, 0).getDate()
+    const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate()
 
     return {
         ...state,
@@ -54,6 +51,7 @@ const handleCalculateDates = (state, date) => {
         currentYear,
         firstDayOfMonth,
         lastDayOfMonth,
+        lastMonthTotalDays,
         totalDays,
     }
 }
