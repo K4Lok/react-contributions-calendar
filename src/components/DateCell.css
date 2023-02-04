@@ -1,4 +1,5 @@
 .cell {
+    position: relative;
     box-sizing: border-box;
     position: relative;
     width: calc(100% / 7);
@@ -8,24 +9,21 @@
     z-index: 2;
 }
 
-.cell.day::before {
+.cell-background {
     position: absolute;
-    content: "";
+    background-color: hsl(202, 57%, 90%);
     width: 100%;
     max-width: 1.8rem;
     aspect-ratio: 1;
-    background-color: rgb(236, 244, 250);
-    border-radius: 4px;
+    border-radius: 3px;
     z-index: -1;
 }
 
 .cell.day.disabled {
-    color: rgb(147, 147, 147);
-    /* background-color: transparent; */
+    color: rgb(89, 89, 89);
 }
 
-.cell.day.disabled::before {
-    filter: grayscale(0.8);
-    background-color: transparent;
-    /* background-color: transparent; */
+.disabled .cell-background{
+    filter: grayscale(0.9);
+    background-color: hsl(0, 0%, 100%);
 }

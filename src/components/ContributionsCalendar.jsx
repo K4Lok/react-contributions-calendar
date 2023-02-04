@@ -57,21 +57,21 @@ export default function ContributionsCalendar({ width = "100%", height = "100%" 
         {
           Array.from(new Array(state.firstDayOfMonth).keys()).reverse().map((d) => {
             return (
-              <DateCell key={d} name={true} disabled >{state.lastMonthTotalDays - d}</DateCell>
+              <DateCell key={d} date={true} disabled >{state.lastMonthTotalDays - d}</DateCell>
             )
           })
         }
         {
           Array.from(new Array(state.totalDays).keys()).map((d) => {
             return (
-              <DateCell key={d} name={true} >{d + 1}</DateCell>
+              <DateCell key={d} date={true} >{d + 1}</DateCell>
             )
           })
         }
         {
           Array.from(new Array(6 - state.lastDayOfMonth).keys()).map((d) => {
             return (
-              <DateCell key={d} name={true} disabled >{d + 1}</DateCell>
+              <DateCell key={d} date={true} disabled >{d + 1}</DateCell>
             )
           })
         }
