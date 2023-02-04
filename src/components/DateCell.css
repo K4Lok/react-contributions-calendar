@@ -8,32 +8,24 @@
     z-index: 2;
 }
 
-.cell.day::after {
-    position: absolute;
-    content: "";
-    width: 100%;
-    max-width: 1.8rem;
-    aspect-ratio: 1;
-    background-color: hsla(0, 66%, 53%, 0.265);
-    border-radius: 4px;
-    z-index: -1;
-}
-
 .cell.day::before {
     position: absolute;
     content: "";
     width: 100%;
     max-width: 1.8rem;
     aspect-ratio: 1;
-    background-color: aliceblue;
+    background-color: rgb(236, 244, 250);
     border-radius: 4px;
     z-index: -1;
 }
 
 .cell.day.disabled {
-    color: rgb(100, 100, 100);
+    color: rgb(147, 147, 147);
+    /* background-color: transparent; */
 }
 
 .cell.day.disabled::before {
-    filter: grayscale(0.8)
+    filter: grayscale(0.8);
+    background-color: transparent;
+    /* background-color: transparent; */
 }
